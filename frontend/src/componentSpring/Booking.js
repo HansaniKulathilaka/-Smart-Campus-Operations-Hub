@@ -4,7 +4,7 @@ import springApi from './springApi';
 import { useReactToPrint } from "react-to-print";
 import axios from "axios";
 import Nav1 from './Nav1';
-import Booking from './Booking';
+import UpdateBooking from './UpdateBooking';
 //import '../css/print.css';
 //import Nav from './Nav';
 //const URL = "http://localhost:8080/stock";
@@ -14,27 +14,11 @@ function Display() {
     const navigate = useNavigate();
     const location = useLocation();
     const ComponentsRef = useRef();
-     const [activeTab, setActiveTab] = useState("booking");
 
     const [filteredData, setFilteredData] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [noResults, setNoResults] = useState(false);
     const [authError, setAuthError] = useState("");
-     const [statusFilter, setStatusFilter] = useState("");
-
-   /* const handleStatusFilter = () => {
-    if (!statusFilter) {
-        setnewdata(filteredData); 
-        return;
-    }
-
-    const filtered = filteredData.filter((item) =>
-        item.status?.toLowerCase() === statusFilter.toLowerCase()
-    );
-
-    setnewdata(filtered);
-    setNoResults(filtered.length === 0);
-};*/
 
     const handlePrint = useReactToPrint({
         content: () => ComponentsRef.current,
@@ -49,7 +33,7 @@ function Display() {
 
     const fetchData = async () => {
         try {
-            /*const response = await axios.get('http://localhost:8080/incident', {
+            /*const response = await axios.get('http://localhost:8080/notification', {
                 withCredentials: true,
             });*/
             setAuthError("");
@@ -61,7 +45,7 @@ function Display() {
                 setNoResults(true);
                 return [];
             }
-            const response = await axios.get('http://localhost:8080/incident', {
+            const response = await axios.get('http://localhost:8080/booking', {
                 headers: {
                     Authorization: `Bearer ${jwt}`
                 }
@@ -89,12 +73,12 @@ function Display() {
 
     const deleteHandler = async (id) => {
         try {
-            await springApi.delete(`/incident/delete/${id}`);
+            await springApi.delete(`/booking/delete/${id}`);
             alert("Deleted successfully!");
             fetchData(); // Refresh data after delete
         } catch (error) {
-            console.error("Error deleting stock:", error);
-            alert("Failed to delete stock. Please try again.");
+            console.error("Error deleting record:", error);
+            alert("Failed to delete data. Please try again.");
         }
     };
 
@@ -122,15 +106,13 @@ function Display() {
         height: "100vh",
         display: "flex",
         justifyContent: "center",
-        alignItems: "center",
-        padding: "20px",
-    minHeight: "100vh"
+        alignItems: "center"
     };
     const containerStyle1 = {
         backgroundColor: "rgba(255, 255, 255, 0.8)", // Semi-transparent background for form
         margin: "20px",
         padding: "20px",
-        width: "900px",
+        width: "300px",
         borderRadius: "10px",
         boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
         fontSize: '30px',
@@ -138,6 +120,7 @@ function Display() {
     };
 
     const buttonStyle = {
+        
         padding: '10px 15px',
         backgroundColor: '#4CAF50',
         color: 'black',
@@ -173,55 +156,17 @@ function Display() {
 };
     return (
         <div>
-            <Nav1/>
-      <div style={{ display: "flex", gap: "10px", marginBottom: "20px" ,}}>
-        <button
-          onClick={() => setActiveTab("booking")}
-          style={{
-            padding: "10px",
-            backgroundColor: activeTab === "booking" ? "#a8cff3" : "#ccc",
-            borderRadius: '4px',
-        cursor: 'pointer',
-        width:"20%"
-          }}
-        >
-          Booking
-        </button>
-
-        <button
-          onClick={() => setActiveTab("incident")}
-          style={{
-            padding: "10px",
-            backgroundColor: activeTab === "incident" ? "#a8cff3" : "#ccc",
-            borderRadius: '4px',
-        cursor: 'pointer',
-        width:"20%"
-          }}
-        >
-          Incidents
-        </button>
-
-        <select onChange={(e) => setStatusFilter(e.target.value)}>
-    <option value="">All</option>
-    <option value="PENDING">Pending</option>
-    <option value="APPROVED">Approved</option>
-    <option value="REJECTED">Rejected</option>
-</select>
-
-{/*<button onClick={handleStatusFilter}>Filter</button>*/}
-      </div>
+           {/* <Nav1/>*/}
             {authError ? (
                 <div>
                     <p>{authError}</p>
                 </div>
             ) : null}
-            {activeTab === "incident" &&(
-            noResults ? (
+            {noResults ? (
                 <div>
                     <p>No Data Found</p>
                 </div>
             ) : (
-                
                 <div ref={ComponentsRef} style={containerStyle}>
                     <div style={gridContainer}>
                     {newdata && newdata.length > 0 ? (
@@ -229,55 +174,46 @@ function Display() {
                             <div key={Item.id ?? Item._id}>
                                 <div style={cardStyle}>
                                     
-                                    <h1>Category: {Item.category}</h1>
                                     <h1>Description: {Item.description}</h1>
-
-                                    <h1>Resource: {Item.resource}</h1>
+                                    <h1>Date: {Item.date}</h1>
+                                    <h1>Time: {Item.time}</h1>
+                                    <h1>Attendance: {Item.attendence}</h1>
+                                    <h1>Purpose: {Item.purpose}</h1>
                                      Status:{" "}
                         <span style={{
                                 color:
-                                Item.status === "RESOLVED" ? "green" :
-                                Item.status === "IN-PROGRESS" ? "yellow" :
+                                Item.status === "APPROVED" ? "green" :
                                 Item.status === "REJECTED" ? "red" : "orange",
                                 fontWeight: "bold"
                                     }}>
                                     {Item.status || "PENDING"}
                                 </span>
-                                <p style={{ color: "blue" }}>
-        Comments: {Item.comments}
-    </p>
                                 {Item.status === "REJECTED" && (
     <p style={{ color: "red" }}>
         Reason: {Item.reason}
     </p>
 )}
-                                    
-                                    <Link to={`/UpdateIncident/${Item.id}`}><button style={buttonStyle}>Update</button></Link>
+<br></br>
+                                    <Link to={`/UpdateBooking/${Item.id}`}><button style={buttonStyle}>Update</button></Link>
                                     <button onClick={() => deleteHandler(Item.id)} style={buttonStyle}>Delete</button>
+
                                 </div>
                             </div>
                         ))
                     ) : (
                         <p>No data available</p>
                     )}
-                
-                
                     </div>
+                    
                     <br></br>
                 </div>
-            )
             )}
-             
-        
-            {activeTab === "booking" &&
-            <div>
-                <Booking/>
-            </div>
-            }
             
+            <div>
+                <Link to={"/"}><button type="submit">Search</button></Link>
+            </div>
         </div>
     )
-
 }
 
 export default Display
