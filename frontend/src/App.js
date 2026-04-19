@@ -42,6 +42,11 @@ import Display from './componentSpring/Display';
 import UpdateSpring from './componentSpring/UpdateSpring';
 import Login1 from './componentSpring/Login1';
 import OAuthCallback from './componentSpring/OAuthCallback';
+import AddBooking from './componentSpring/AddBooking';
+import AddIncident from './componentSpring/AddIncident';
+import Booking from './componentSpring/Booking';
+import UpdateBooking from './componentSpring/UpdateBooking';
+import UpdateIncident from './componentSpring/UpdateIncident';
 
 
 function App() {
@@ -91,6 +96,11 @@ function App() {
             <Route path = "/UpdateSpring/:id" element ={<UpdateSpring/>}/>
             <Route path = "/Login1" element ={<Login1/>}/>
             <Route path = "/oauth/callback" element ={<OAuthCallback/>}/>
+             <Route path = "/AddBooking" element ={<AddBooking/>}/>
+              <Route path = "/AddIncident" element ={<AddIncident/>}/>
+             <Route path = "/Booking" element ={<Booking/>}/>
+             <Route path = "/UpdateBooking/:id" element ={<UpdateBooking/>}/>
+             <Route path = "/UpdateIncident/:id" element ={<UpdateIncident/>}/>
            
           
         </Routes>

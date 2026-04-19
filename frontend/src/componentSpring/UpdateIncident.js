@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react'
 import springApi from './springApi';
 import { useParams, useNavigate } from 'react-router-dom'
 import axios from "axios";
-import UpdateBooking from './UpdateBooking';
 
-function UpdateSpring() {
-    const [inputs, setInputs] = useState({  name: '' });
+
+function UpdateIncident() {
+    const [inputs, setInputs] = useState({  status: '' ,reason:'',comments:''});
     const navigate = useNavigate();
     const { id } = useParams();
     
@@ -17,7 +17,7 @@ function UpdateSpring() {
                 /*const response = await axios.get(`http://localhost:8080/notification/${id}`, {
                     withCredentials: true,
                 });*/
-                const response = await springApi.get(`/notification/${id}`);
+                const response = await springApi.get(`/incident/${id}`);
                 console.log("Fetched data:", response.data);
                 
                 // Check if the response has a data property
@@ -29,7 +29,7 @@ function UpdateSpring() {
             } catch (error) {
                 console.error("Error fetching data:", error);
                 alert("Data not found!");
-                navigate("/Display");
+                //navigate("/Display");
             }
         };
         fetchHandler();
@@ -37,7 +37,7 @@ function UpdateSpring() {
 
     const sendRequest = async () => {
         const formData = new FormData();
-    formData.append("details", JSON.stringify({ name: inputs.name }));
+    formData.append("details", JSON.stringify({ status: inputs.status,reason: inputs.reason ,comments: inputs.comments }));
         try {
             console.log("Sending update request with data:", inputs);
             
@@ -47,7 +47,7 @@ function UpdateSpring() {
                 
             });*/
             const response = await springApi.put(
-                `/notification/update/${id}`,
+                `/incident/update/${id}`,
                 formData,
                 { headers: { "Content-Type": "multipart/form-data" } }
             );
@@ -64,6 +64,33 @@ function UpdateSpring() {
         }
     };
 
+    /*const updateStatus = async (id, status) => {
+    try {
+        let reason = "";
+
+        if (status === "REJECTED") {
+            reason = prompt("Enter rejection reason:");
+        }
+
+        const formData = new FormData();
+        formData.append(
+            "details",
+            JSON.stringify({
+                status: status,
+                reason: reason
+            })
+        );
+
+        await axios.put(`http://localhost:8080/booking/update/${id}`, formData);
+
+        alert(`Booking ${status}`);
+        //fetchData(); // refresh list
+    } catch (error) {
+        console.error("Error updating status:", error);
+        alert("Failed to update status");
+    }
+};*/
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         console.log(`Changing ${name} to:`, value);
@@ -76,11 +103,21 @@ function UpdateSpring() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (!inputs.status) {
+        alert("Please select ongoing status");
+        return;
+    }
+
+    if (inputs.status === "REJECTED" && !inputs.reason) {
+        alert("Please enter a reason before submitting");
+        return;
+    }
         console.log("Form submitted with data:", inputs);
         sendRequest();
     };
 
     const containerStyle = {
+        backgroundColor: "rgba(219, 244, 252, 0.96)",
         //backgroundImage: "url('https://static1.bigstockphoto.com/2/5/5/large1500/552076.jpg')", // Background image URL
         backgroundSize: "cover",
         backgroundPosition: "center",
@@ -101,24 +138,86 @@ function UpdateSpring() {
         borderRadius: "10px",
         boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)"
     };
+    const buttonStyle = {
+        padding: '10px 15px',
+        backgroundColor: '#4CAF50',
+        color: 'black',
+        border: 'none',
+        borderRadius: '4px',
+        cursor: 'pointer',
+        fontSize: '16px',
+        fontWeight: 'bold'
+    };
     return (
         <div style={containerStyle}>
             <form onSubmit={handleSubmit} style={formStyle}>
                 <h1>Update Data</h1>
                 
-                <label><h1>Name</h1></label>
-                <input type="text" name="name" onChange={handleChange} value={inputs.name || ""} required></input>
+                <button 
+    type="button"
+    onClick={() => setInputs(prev => ({ ...prev, status: "IN_PROGRESS", reason: "" }))}
+    style={{...buttonStyle, backgroundColor: "lightorange"}}
+>
+    IN PROGRESS
+</button>
+<button 
+    type="button"
+    onClick={() => setInputs(prev => ({ ...prev, status: "RESOLVED", reason: "" }))}
+    style={{...buttonStyle, backgroundColor: "lightgreen"}}
+>
+    RESOLVED
+</button>
+
+<button 
+    type="button"
+    onClick={() => setInputs(prev => ({ ...prev, status: "REJECTED" }))}
+    style={{...buttonStyle, backgroundColor: "salmon"}}
+>
+    Reject
+</button>
+
+<label><h1>Resolution</h1></label>
+        <input 
+            type="text" 
+            name="resolution" 
+            onChange={handleChange} 
+            value={inputs.resolution || ""} 
+            required
+        />
+
+ <label><h1>Give Comments</h1></label>
+        <input 
+            type="text" 
+            name="comments" 
+            onChange={handleChange} 
+            value={inputs.comments || ""} 
+            required
+        />
+
+
+               {/* <label><h1>Give Reason</h1></label>
+                <input type="text" name="reason" onChange={handleChange} value={inputs.reason || ""} required></input>
                 <br></br>
                
                 
-                <br></br><br></br>
+                <br></br><br></br>*/}
+                {inputs.status === "REJECTED" && (
+    <>
+        <label><h1>Give Reason</h1></label>
+        <input 
+            type="text" 
+            name="reason" 
+            onChange={handleChange} 
+            value={inputs.reason || ""} 
+            required
+        />
+    </>
+)}
                 <button type="submit">Submit</button>
             </form>
-            <div>
-                <UpdateBooking/>
-            </div>
+            
         </div>
     )
 }
 
-export default UpdateSpring
+export default UpdateIncident

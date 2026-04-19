@@ -74,6 +74,30 @@ function Nav() {
                         >
                             Login
                         </Link>
+                        <Link 
+                            to="/AddBooking" 
+                            style={linkStyle}
+                            onMouseEnter={(e) => e.target.style.backgroundColor = linkHoverStyle.backgroundColor}
+                            onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                        >
+                            Booking
+                        </Link>
+                        <Link 
+                            to="/Booking" 
+                            style={linkStyle}
+                            onMouseEnter={(e) => e.target.style.backgroundColor = linkHoverStyle.backgroundColor}
+                            onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                        >
+                            DisplayBooking
+                        </Link>
+                        <Link 
+                            to="/AddIncident" 
+                            style={linkStyle}
+                            onMouseEnter={(e) => e.target.style.backgroundColor = linkHoverStyle.backgroundColor}
+                            onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                        >
+                            Incident 
+                        </Link>
                     </li>
 
                     <li>
