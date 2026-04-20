@@ -22,19 +22,26 @@ function Display() {
     const [authError, setAuthError] = useState("");
      const [statusFilter, setStatusFilter] = useState("");
 
-   /* const handleStatusFilter = () => {
-    if (!statusFilter) {
+   const handleStatusFilter = () => {
+    /*if (!statusFilter) {
         setnewdata(filteredData); 
         return;
     }
 
     const filtered = filteredData.filter((item) =>
         item.status?.toLowerCase() === statusFilter.toLowerCase()
-    );
+    );*/
+    let filtered = filteredData;
+
+    if (statusFilter) {
+        filtered = filteredData.filter((item) =>
+            item.status?.toLowerCase() === statusFilter.toLowerCase()
+        );
+    }
 
     setnewdata(filtered);
     setNoResults(filtered.length === 0);
-};*/
+};
 
     const handlePrint = useReactToPrint({
         content: () => ComponentsRef.current,
@@ -127,7 +134,7 @@ function Display() {
     minHeight: "100vh"
     };
     const containerStyle1 = {
-        backgroundColor: "rgba(255, 255, 255, 0.8)", // Semi-transparent background for form
+        backgroundColor: "rgba(219, 244, 252, 0.96)", // Semi-transparent background for form
         margin: "20px",
         padding: "20px",
         width: "900px",
@@ -145,7 +152,8 @@ function Display() {
         borderRadius: '4px',
         cursor: 'pointer',
         fontSize: '16px',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        margin:"10px"
     };
 
     const gridContainer = {
@@ -174,6 +182,31 @@ function Display() {
     return (
         <div>
             <Nav1/>
+
+            <div style={{ display: "flex", minHeight: "100vh", width:"100%" }}>
+      <div
+        style={{
+          width: "400px",
+          background: "#b9ddeeff",
+          padding: "20px",
+          boxShadow: "2px 0 5px rgba(0,0,0,0.1)",
+        }}
+      >
+        <h2>Sidebar</h2>
+        <div style={{ width: "80%", display: "flex", justifyContent: "flex-end", /*marginBottom: "20px",*/ marginTop:"36px", marginRight:"500px"}}>
+    
+  </div>
+      </div>
+
+      {/* Main Content */}
+      
+      <div
+        style={{
+          flex: 1,
+          backgroundColor: "rgba(219, 244, 252, 0.96)",
+          padding: "40px",
+        }}
+      >
       <div style={{ display: "flex", gap: "10px", marginBottom: "20px" ,}}>
         <button
           onClick={() => setActiveTab("booking")}
@@ -208,7 +241,7 @@ function Display() {
     <option value="REJECTED">Rejected</option>
 </select>
 
-{/*<button onClick={handleStatusFilter}>Filter</button>*/}
+<button onClick={handleStatusFilter} style={buttonStyle}>Filter</button>
       </div>
             {authError ? (
                 <div>
@@ -217,6 +250,7 @@ function Display() {
             ) : null}
             {activeTab === "incident" &&(
             noResults ? (
+                
                 <div>
                     <p>No Data Found</p>
                 </div>
@@ -229,9 +263,9 @@ function Display() {
                             <div key={Item.id ?? Item._id}>
                                 <div style={cardStyle}>
                                     
+                                    <h1><b>Title: {Item.description}</b></h1>
                                     <h1>Category: {Item.category}</h1>
-                                    <h1>Description: {Item.description}</h1>
-
+                                    
                                     <h1>Resource: {Item.resource}</h1>
                                      Status:{" "}
                         <span style={{
@@ -274,6 +308,9 @@ function Display() {
                 <Booking/>
             </div>
             }
+
+            </div>
+            </div>
             
         </div>
     )
