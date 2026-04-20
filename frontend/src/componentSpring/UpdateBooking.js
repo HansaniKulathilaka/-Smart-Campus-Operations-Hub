@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import springApi from './springApi';
 import { useParams, useNavigate } from 'react-router-dom'
 import axios from "axios";
+import Nav1 from './Nav1';
 
 
 function UpdateBooking() {
@@ -133,9 +134,10 @@ function UpdateBooking() {
     const formStyle = {
         backgroundColor: "rgba(255, 255, 255, 0.8)", // Semi-transparent background for form
         padding: "20px",
-        width: "500px",
+        width: "600px",
         borderRadius: "10px",
-        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)"
+        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+        fontSize:"24px"
     };
     const buttonStyle = {
         padding: '10px 15px',
@@ -146,10 +148,52 @@ function UpdateBooking() {
         cursor: 'pointer',
         fontSize: '16px',
         fontWeight: 'bold',
-        gap:'20px'
+        margin:"10px"
+    };
+
+    const inputStyle = {
+        padding: '10px',
+        borderRadius: '4px',
+        border: '1px solid #ddd',
+        fontSize: '16px'
+        /*width: '100%',
+        padding: '8px',
+        borderRadius: '5px',
+        border: '1px solid #ddd',
+        fontSize: '16px'*/
+       
     };
     return (
+        <div>
+         <Nav1/>
         <div style={containerStyle}>
+            
+             <div style={{ display: "flex", minHeight: "100vh", width:"100%" }}>
+      <div
+        style={{
+          width: "400px",
+          background: "#b9ddeeff",
+          padding: "20px",
+          boxShadow: "2px 0 5px rgba(0,0,0,0.1)",
+        }}
+      >
+        <h2>Sidebar</h2>
+        <div style={{ width: "80%", display: "flex", justifyContent: "flex-end", /*marginBottom: "20px",*/ marginTop:"36px", marginRight:"500px"}}>
+    
+  </div>
+      </div>
+
+      {/* Main Content */}
+      
+      <div
+        style={{
+          flex: 1,
+          backgroundColor: "#e6f2ff",
+          padding: "40px",
+          marginLeft:"300px",
+          marginTop:"200px"
+        }}
+      >
             <form onSubmit={handleSubmit} style={formStyle}>
                 <h1>Update Data</h1>
                 
@@ -158,7 +202,7 @@ function UpdateBooking() {
     onClick={() => setInputs(prev => ({ ...prev, status: "APPROVED", reason: "" }))}
     style={{...buttonStyle, backgroundColor: "lightgreen"}}
 >
-    Approve
+    APPROVED
 </button>
 
 <button 
@@ -166,7 +210,7 @@ function UpdateBooking() {
     onClick={() => setInputs(prev => ({ ...prev, status: "REJECTED" }))}
     style={{...buttonStyle, backgroundColor: "salmon"}}
 >
-    Reject
+    REJECTED
 </button>
 
 
@@ -184,14 +228,18 @@ function UpdateBooking() {
             name="reason" 
             onChange={handleChange} 
             value={inputs.reason || ""} 
+            style={inputStyle}
             required
         />
     </>
 )}
-<br></br>
+<br></br><br></br>
                 <button type="submit" style={buttonStyle}>Submit</button>
             </form>
             
+            </div>
+            </div>
+        </div>
         </div>
     )
 }

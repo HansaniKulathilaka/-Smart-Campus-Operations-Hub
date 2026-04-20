@@ -128,7 +128,8 @@ function Display() {
         borderRadius: '4px',
         cursor: 'pointer',
         fontSize: '16px',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        margin:"10px"
     };
 
     const gridContainer = {
@@ -157,6 +158,7 @@ function Display() {
     return (
         <div>
            {/* <Nav1/>*/}
+           
             {authError ? (
                 <div>
                     <p>{authError}</p>
@@ -174,7 +176,7 @@ function Display() {
                             <div key={Item.id ?? Item._id}>
                                 <div style={cardStyle}>
                                     
-                                    <h1>Description: {Item.description}</h1>
+                                    <h1><b>Title: {Item.description}</b></h1>
                                     <h1>Date: {Item.date}</h1>
                                     <h1>Time: {Item.time}</h1>
                                     <h1>Attendance: {Item.attendence}</h1>
@@ -212,6 +214,8 @@ function Display() {
             <div>
                 <Link to={"/"}><button type="submit">Search</button></Link>
             </div>
+
+           
         </div>
     )
 }
