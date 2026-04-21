@@ -20,6 +20,8 @@ function Display() {
     const [noResults, setNoResults] = useState(false);
     const [authError, setAuthError] = useState("");
 
+    const [statusFilter, setStatusFilter] = useState("");
+
     const handlePrint = useReactToPrint({
         content: () => ComponentsRef.current,
         documentTitle: "Report",
@@ -66,6 +68,28 @@ function Display() {
             return [];
         }
     };
+
+
+    const handleStatusFilter = () => {
+    /*if (!statusFilter) {
+        setnewdata(filteredData); 
+        return;
+    }
+
+    const filtered = filteredData.filter((item) =>
+        item.status?.toLowerCase() === statusFilter.toLowerCase()
+    );*/
+    let filtered = filteredData;
+
+    if (statusFilter) {
+        filtered = filteredData.filter((item) =>
+            item.status?.toLowerCase() === statusFilter.toLowerCase()
+        );
+    }
+
+    setnewdata(filtered);
+    setNoResults(filtered.length === 0);
+};
 
     useEffect(() => {
         fetchData();
@@ -196,7 +220,7 @@ function Display() {
     </p>
 )}
 <br></br>
-                                    <Link to={`/UpdateBooking/${Item.id}`}><button style={buttonStyle}>Update</button></Link>
+                                    <Link to={`/UpdateBooking/${Item.id}`}><button style={buttonStyle}>Update Status</button></Link>
                                     <button onClick={() => deleteHandler(Item.id)} style={buttonStyle}>Delete</button>
 
                                 </div>

@@ -176,7 +176,7 @@ function UpdateIncident() {
           boxShadow: "2px 0 5px rgba(0,0,0,0.1)",
         }}
       >
-        <h2>Sidebar</h2>
+        <h2>...Change Incident Status !!!</h2>
         <div style={{ width: "80%", display: "flex", justifyContent: "flex-end", /*marginBottom: "20px",*/ marginTop:"36px", marginRight:"500px"}}>
     
   </div>
@@ -219,24 +219,24 @@ function UpdateIncident() {
 >
     REJECTED
 </button>
-
+<br></br><br></br>
 <label><h1>Resolution</h1></label>
         <input 
             type="text" 
             name="resolution" 
             onChange={handleChange} 
             value={inputs.resolution || ""} 
-            style={inputStyle}
+            style={{...inputStyle, width: "80%"}}
             required
         />
-
+<br></br><br></br>
  <label><h1>Give Comments</h1></label>
         <input 
             type="text" 
             name="comments" 
             onChange={handleChange} 
             value={inputs.comments || ""} 
-            style={inputStyle}
+            style={{...inputStyle, width: "80%"}}
             required
         />
 
