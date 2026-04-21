@@ -38,7 +38,23 @@ const buttonStyle = {
         borderRadius: '4px',
         cursor: 'pointer',
         fontSize: '16px',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        width:"300px"
+        
+    };
+    const buttonStyle1 = {
+        padding: '10px 15px',
+        backgroundColor: '#dbe9db',
+        color: 'black',
+        border: 'none',
+        borderRadius: '4px',
+        cursor: 'pointer',
+        fontSize: '16px',
+        fontWeight: 'bold',
+        //height: "100px",
+        height:"auto",
+        width:"300px",
+        marginRight:"20px"
     };
 const formStyle = {
         backgroundColor: "rgba(255, 255, 255, 0.8)", // Semi-transparent background for form
@@ -65,21 +81,35 @@ const formStyle = {
     <div>
          <Nav1/>
        <div style={containerStyle}>
-      <h1>Login Page</h1>
-      <br></br>
-      <button onClick={handleLogin}  style={buttonStyle}>
-  Login with Google
-</button>
 
- <div>
+        <div>
                 
            <h1 style={{fontSize:'40px', fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif", color: "#f10e0eff",margin: "100px"}}><b>Welcome!<br></br> to SLIIT Connect</b></h1>
             
             
             <br></br><br></br>
            </div>
+         <img
+    src={
+      //user.photo ||
+      "https://imagepng.org/wp-content/uploads/2019/08/google-icon-1.png"
+    }
+    alt="google"
+    style={{
+      width: "50px",          
+      height: "50px",       
+      //objectFit: "cover",     
+      borderRadius: "10px" ,
+      opacity: 1.00,   
+    }}
+  />
+      <button onClick={handleLogin}  style={buttonStyle1}>
+        
+  Login with Google
+</button><br></br><br></br>
             
            <div  >
+           
             <form /*onSubmit={handleSubmit}*/ style={formStyle}>
            {/* <Link to={"/Register2"}><button style={buttonStyle}>Register</button></Link>*/}
             <label><h1>User Role</h1></label>
@@ -100,6 +130,9 @@ const formStyle = {
             <input style={inputStyle} type = "password" name = "Password"  onChange = {handleChange} /*value={inputs.Password || ""} */required></input>
             <br></br><br></br>
             <button type = "submit" style={buttonStyle}>Login</button>
+     <br></br>
+       
+       
             </form>
             </div>
             </div>

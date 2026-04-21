@@ -3,6 +3,8 @@ package com.example.project.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 
 //import java.util.List;
 
@@ -26,9 +28,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import tools.jackson.databind.ObjectMapper;
 
+
 import com.example.project.demo.exception.notificNotFoundException;
 import com.example.project.demo.model.BookingModel;
 import com.example.project.demo.repository.BookingRepo;
+
+import org.springframework.hateoas.EntityModel;
+//import org.springframework.hateoas.CollectionModel;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 //import tools.jackson.databind.ObjectMapper;
 
@@ -38,6 +46,7 @@ public class BookingController {
     @Autowired
     private BookingRepo BookingRepo;
 
+    @CacheEvict(value = {"booking", "bookings"}, allEntries = true)
     @PostMapping("/booking")
     public BookingModel newBookingModel(@RequestBody BookingModel newBookingModel){
         return BookingRepo.save(newBookingModel);
@@ -60,16 +69,31 @@ public class BookingController {
         }
         return img;
     }*/
-
+        @Cacheable("bookings")
         @GetMapping("/booking")
         List<BookingModel> getAll(){
             return BookingRepo.findAll();
         }
 
-        @GetMapping("/booking/{id}")
+        /*@GetMapping("/booking/{id}")
         BookingModel getOne(@PathVariable String id){
             return BookingRepo.findById(id).orElseThrow(() -> new notificNotFoundException(id) );
-        }
+        }*/
+
+       @Cacheable(value = "booking", key = "#id")
+       @GetMapping("/booking/{id}")
+public EntityModel<BookingModel> getOne(@PathVariable String id) {
+
+    BookingModel booking = BookingRepo.findById(id)
+            .orElseThrow(() -> new notificNotFoundException(id));
+
+    return EntityModel.of(booking,
+            linkTo(methodOn(BookingController.class).getOne(id)).withSelfRel(),
+            linkTo(methodOn(BookingController.class).getAll()).withRel("all-bookings")
+            
+            
+    );
+}
 
        /*  private final String UPLOAD_DIR = "src/main/uploads/";
         @GetMapping("/uploads/{fileName}")
@@ -82,6 +106,7 @@ public class BookingController {
 
         }*/
 
+        @CacheEvict(value = {"booking", "bookings"}, key = "#id", allEntries = true)
         @PutMapping("/booking/update/{id}")
         public BookingModel update(
             @RequestPart(value = "details") String details,
@@ -118,7 +143,8 @@ public class BookingController {
             }).orElseThrow(()-> new notificNotFoundException(id));
 
         }
-
+        
+        @CacheEvict(value = {"booking", "bookings"}, key = "#id", allEntries = true)
         @DeleteMapping("/booking/delete/{id}")
         String deleteData(@PathVariable String id){
            /*  AddDataModel data =*/ BookingRepo.findById(id).orElseThrow(()-> new notificNotFoundException(id));

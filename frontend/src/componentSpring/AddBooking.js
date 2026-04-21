@@ -2,10 +2,12 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Nav1 from '../componentSpring/Nav1';
 import springApi from './springApi';
+import AddIncident from './AddIncident';
 
 function AddStock(){
     
     const history = useNavigate();
+    const [activeTab, setActiveTab] = useState("booking");
     const [inputs,setInputs] = useState({
         date: "",
         time: "",
@@ -79,6 +81,7 @@ function AddStock(){
     const navigate = useNavigate();
     const containerStyle = {
         //backgroundImage: "url('https://thumbs.dreamstime.com/z/d-rendering-silver-stars-hotel-sign-white-facade-77987116.jpg')", // Background image URL
+        backgroundColor:"rgba(219, 244, 252, 0.96)",
         backgroundSize: "cover",
         backgroundPosition: "center",
         fontFamily: "Arial, sans-serif",
@@ -96,7 +99,8 @@ function AddStock(){
         padding: "20px",
         width: "500px",
         borderRadius: "10px",
-        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)"
+        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+        fontSize:"24px"
     };
 
     const inputStyle = {
@@ -120,17 +124,80 @@ function AddStock(){
         <div>
             <Nav1/>
         <div style={containerStyle}>
-           
+            <div style={{ display: "flex", minHeight: "100vh", width:"100%" }}>
+      <div
+        style={{
+          width: "400px",
+          background: "#b9ddeeff",
+          padding: "20px",
+          boxShadow: "2px 0 5px rgba(0,0,0,0.1)",
+        }}
+      >
+        <br></br>
+        <h2>...Add New Bookings and Report Incidents !!!</h2>
+       
+         <button
+          onClick={() => setActiveTab("booking")}
+          style={{
+            padding: "10px",
+            backgroundColor: activeTab === "booking" ? "#a8cff3" : "#ccc",
+            borderRadius: '4px',
+        cursor: 'pointer',
+        width:"90%",
+        margin:"20px",
+        fontSize:"20px",
+          }}
+        >
+          Booking
+        </button>
+          <br></br>
+        <button
+          onClick={() => setActiveTab("incident")}
+          style={{
+            padding: "10px",
+            backgroundColor: activeTab === "incident" ? "#a8cff3" : "#ccc",
+            borderRadius: '4px',
+        cursor: 'pointer',
+        width:"90%",
+        margin:"20px",
+        fontSize:"20px",
+        
+          }}
+        >
+          Incidents
+        </button>
+        <div style={{ width: "80%", display: "flex", justifyContent: "flex-end", /*marginBottom: "20px",*/ marginTop:"36px", marginRight:"500px"}}>
+    
+  </div>
+      </div>
+
+      {/* Main Content */}
+      
+      <div
+        style={{
+          flex: 1,
+          backgroundColor: "rgba(219, 244, 252, 0.96)",
+          //padding: "40px",
+          marginLeft:"400px",
+          marginTop:"100px"
+          
+        }}
+      >
+       
+           {activeTab === "booking" &&
+           <div>
+                 
             <form onSubmit={handleSubmit} style={formStyle}>
-            
-            <label><h1>Discription</h1></label>
-            <input type = "text" name = "description" onChange = {handleChange} value={inputs.description || ""} required></input>
+            <p style={{fontSize:"30px", fontWeight:"bold", marginLeft:"0px",color:"green"}}><center>Add Bookings</center></p>
+                 <br></br>
+            <label><h1>Title</h1></label>
+            <input type = "text" name = "description" onChange = {handleChange} value={inputs.description || ""} style={{ ...inputStyle, width: "100%" }} required></input>
             <br></br><br></br>
             <label><h1>Date</h1></label>
-            <input type = "Date" name = "date" onChange = {handleChange} value={inputs.date || ""} required></input>
+            <input type = "Date" name = "date" onChange = {handleChange} value={inputs.date || ""}  style={{ ...inputStyle, width: "100%" }} required></input>
             <br></br><br></br>
             <label><h1>Time</h1></label>
-            <input type = "time" name = "time" onChange = {handleChange} value={inputs.time || ""} required></input>
+            <input type = "time" name = "time" onChange = {handleChange} value={inputs.time || ""} style={{ ...inputStyle, width: "100%" }} required></input>
             <br></br><br></br>
             <label><h1>Attendance</h1></label>
              <select
@@ -168,7 +235,15 @@ function AddStock(){
 
             <button type = "submit"  style={buttonStyle}>Submit</button>
             </form>
-             
+            </div>
+            }
+        {activeTab === "incident" &&
+            <div>
+                <AddIncident/>
+            </div>
+        }
+             </div>
+             </div>
         </div>
         </div>
     )

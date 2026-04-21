@@ -77,6 +77,7 @@ function AddStock(){
     const navigate = useNavigate();
     const containerStyle = {
         //backgroundImage: "url('https://thumbs.dreamstime.com/z/d-rendering-silver-stars-hotel-sign-white-facade-77987116.jpg')", // Background image URL
+        backgroundColor:"rgba(219, 244, 252, 0.96)",
         backgroundSize: "cover",
         backgroundPosition: "center",
         fontFamily: "Arial, sans-serif",
@@ -115,13 +116,42 @@ function AddStock(){
     };
     return(
         <div>
-            <Nav1/>
+          {/*  <Nav1/>
         <div style={containerStyle}>
+
+            <div style={{ display: "flex", minHeight: "100vh", width:"100%" }}>
+      <div
+        style={{
+          width: "400px",
+          background: "#b9ddeeff",
+          padding: "20px",
+          boxShadow: "2px 0 5px rgba(0,0,0,0.1)",
+        }}
+      >
+        <h2>Sidebar</h2>
+        <div style={{ width: "80%", display: "flex", justifyContent: "flex-end",  marginTop:"36px", marginRight:"500px"}}>
+    
+  </div>
+      </div>
+
+      
+      
+      <div
+        style={{
+          flex: 1,
+          backgroundColor: "rgba(219, 244, 252, 0.96)",
+          //padding: "40px",
+          marginLeft:"400px",
+          marginTop:"100px"
+          
+        }}
+      >*/}
            
             <form onSubmit={handleSubmit} style={formStyle}>
-            
-            <label><h1>Discription</h1></label>
-            <input type = "text" name = "description" onChange = {handleChange} value={inputs.description || ""} required></input>
+            <p style={{fontSize:"30px", fontWeight:"bold", marginLeft:"0px",color:"green"}}><center>Report Incidents</center></p>
+                 <br></br>
+            <label><h1>Title</h1></label>
+            <input type = "text" name = "description" onChange = {handleChange} value={inputs.description || ""} style={{ ...inputStyle, width: "100%" }} required></input>
             <br></br><br></br>
              <label><h1>Category</h1></label>
             <select
@@ -162,7 +192,10 @@ function AddStock(){
             <button type = "submit"  style={buttonStyle}>Submit</button>
             </form>
 
-        </div>
+           {/* </div>
+            </div>
+
+        </div>*/}
         </div>
     )
 }

@@ -153,7 +153,16 @@ function Display() {
         cursor: 'pointer',
         fontSize: '16px',
         fontWeight: 'bold',
-        margin:"10px"
+        margin:"10px",
+        width:"200px"
+    };
+
+    const inputStyle = {
+        padding: "10px",
+        borderRadius: "5px",
+        border: "1px solid #ccc",
+        width: "70%",
+        fontSize: "16px"
     };
 
     const gridContainer = {
@@ -192,7 +201,39 @@ function Display() {
           boxShadow: "2px 0 5px rgba(0,0,0,0.1)",
         }}
       >
-        <h2>Sidebar</h2>
+        <br></br>
+        <p style={{fontSize:"30px", fontWeight:"bold"}}>...Check Bookings and Incidents !!!</p>
+       <br></br><br></br>
+         <button
+          onClick={() => setActiveTab("booking")}
+          style={{
+            padding: "10px",
+            backgroundColor: activeTab === "booking" ? "#a8cff3" : "#ccc",
+            borderRadius: '4px',
+        cursor: 'pointer',
+        width:"90%",
+        margin:"20px",
+        fontSize:"20px",
+          }}
+        >
+          Booking
+        </button>
+          <br></br>
+        <button
+          onClick={() => setActiveTab("incident")}
+          style={{
+            padding: "10px",
+            backgroundColor: activeTab === "incident" ? "#a8cff3" : "#ccc",
+            borderRadius: '4px',
+        cursor: 'pointer',
+        width:"90%",
+        margin:"20px",
+        fontSize:"20px",
+        
+          }}
+        >
+          Incidents
+        </button>
         <div style={{ width: "80%", display: "flex", justifyContent: "flex-end", /*marginBottom: "20px",*/ marginTop:"36px", marginRight:"500px"}}>
     
   </div>
@@ -207,38 +248,15 @@ function Display() {
           padding: "40px",
         }}
       >
-      <div style={{ display: "flex", gap: "10px", marginBottom: "20px" ,}}>
-        <button
-          onClick={() => setActiveTab("booking")}
-          style={{
-            padding: "10px",
-            backgroundColor: activeTab === "booking" ? "#a8cff3" : "#ccc",
-            borderRadius: '4px',
-        cursor: 'pointer',
-        width:"20%"
-          }}
-        >
-          Booking
-        </button>
+       <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
+       
 
-        <button
-          onClick={() => setActiveTab("incident")}
-          style={{
-            padding: "10px",
-            backgroundColor: activeTab === "incident" ? "#a8cff3" : "#ccc",
-            borderRadius: '4px',
-        cursor: 'pointer',
-        width:"20%"
-          }}
-        >
-          Incidents
-        </button>
-
-        <select onChange={(e) => setStatusFilter(e.target.value)}>
+        <select onChange={(e) => setStatusFilter(e.target.value)} >
     <option value="">All</option>
     <option value="PENDING">Pending</option>
     <option value="APPROVED">Approved</option>
     <option value="REJECTED">Rejected</option>
+    <option value="IN_PROGRESS">in progress</option>
 </select>
 
 <button onClick={handleStatusFilter} style={buttonStyle}>Filter</button>
@@ -249,6 +267,7 @@ function Display() {
                 </div>
             ) : null}
             {activeTab === "incident" &&(
+                
             noResults ? (
                 
                 <div>
@@ -286,7 +305,7 @@ function Display() {
     </p>
 )}
                                     
-                                    <Link to={`/UpdateIncident/${Item.id}`}><button style={buttonStyle}>Update</button></Link>
+                                    <Link to={`/UpdateIncident/${Item.id}`}><button style={buttonStyle}>Update Status</button></Link>
                                     <button onClick={() => deleteHandler(Item.id)} style={buttonStyle}>Delete</button>
                                 </div>
                             </div>

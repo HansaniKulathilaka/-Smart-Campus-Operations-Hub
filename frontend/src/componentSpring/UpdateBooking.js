@@ -177,7 +177,7 @@ function UpdateBooking() {
           boxShadow: "2px 0 5px rgba(0,0,0,0.1)",
         }}
       >
-        <h2>Sidebar</h2>
+        <h2>...Change Booking Status !!!</h2>
         <div style={{ width: "80%", display: "flex", justifyContent: "flex-end", /*marginBottom: "20px",*/ marginTop:"36px", marginRight:"500px"}}>
     
   </div>
@@ -228,7 +228,7 @@ function UpdateBooking() {
             name="reason" 
             onChange={handleChange} 
             value={inputs.reason || ""} 
-            style={inputStyle}
+            style={{...inputStyle, width: "80%"}}
             required
         />
     </>

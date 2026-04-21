@@ -42,30 +42,16 @@ function Nav() {
             <nav style={navStyle}>
                 <ul style={ulStyle}>
                     <li>
-                        <Link 
-                            to="/AddData" 
-                            style={linkStyle}
-                            onMouseEnter={(e) => e.target.style.backgroundColor = linkHoverStyle.backgroundColor}
-                            onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
-                        >
-                            AddData
-                        </Link>
+                        
                         <Link 
                             to="/Display" 
                             style={linkStyle}
                             onMouseEnter={(e) => e.target.style.backgroundColor = linkHoverStyle.backgroundColor}
                             onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
                         >
-                            Display
+                            Dashboard
                         </Link>
-                        <Link 
-                            to="/UpdateSpring" 
-                            style={linkStyle}
-                            onMouseEnter={(e) => e.target.style.backgroundColor = linkHoverStyle.backgroundColor}
-                            onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
-                        >
-                            Update
-                        </Link>
+                        
                         <Link 
                             to="/Login1" 
                             style={linkStyle}
@@ -80,24 +66,10 @@ function Nav() {
                             onMouseEnter={(e) => e.target.style.backgroundColor = linkHoverStyle.backgroundColor}
                             onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
                         >
-                            Booking
+                            Actions
                         </Link>
-                        <Link 
-                            to="/Booking" 
-                            style={linkStyle}
-                            onMouseEnter={(e) => e.target.style.backgroundColor = linkHoverStyle.backgroundColor}
-                            onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
-                        >
-                            DisplayBooking
-                        </Link>
-                        <Link 
-                            to="/AddIncident" 
-                            style={linkStyle}
-                            onMouseEnter={(e) => e.target.style.backgroundColor = linkHoverStyle.backgroundColor}
-                            onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
-                        >
-                            Incident 
-                        </Link>
+                        
+                        
                     </li>
 
                     <li>
